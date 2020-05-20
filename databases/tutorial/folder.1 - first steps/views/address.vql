@@ -1,0 +1,41 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC address
+    FOLDER = '/1 - first steps'
+    DATASOURCENAME=acme_crm_ds
+    CATALOGNAME='${databases.tutorial.folder.1 - first steps.views.jdbc.address.CATALOGNAME}' 
+    RELATIONNAME='address' 
+    OUTPUTSCHEMA (
+        client_fid = 'client_fid' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', description='', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE,
+        street = 'street' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        city = 'city' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        zip = 'zip' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        state = 'state' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        primary_phone = 'primary_phone' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE address I18N gb (
+        client_fid:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '50', description = ''), 
+        street:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100', description = ''), 
+        city:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100', description = ''), 
+        zip:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100', description = ''), 
+        state:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100', description = ''), 
+        primary_phone:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100', description = '')
+    )
+    FOLDER = '/1 - first steps'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD address(
+        I18N gb
+        CONSTRAINTS (
+             ADD client_fid (any) OPT ANY
+             ADD street (any) OPT ANY
+             ADD city (any) OPT ANY
+             ADD zip (any) OPT ANY
+             ADD state (any) OPT ANY
+             ADD primary_phone (any) OPT ANY
+        )
+        OUTPUTLIST (city, client_fid, primary_phone, state, street, zip
+        )
+        WRAPPER (jdbc address)
+    );
+

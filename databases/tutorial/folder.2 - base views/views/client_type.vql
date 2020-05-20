@@ -1,0 +1,29 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC client_type
+    FOLDER = '/2 - base views'
+    DATASOURCENAME=acme_crm_ds
+    CATALOGNAME='${databases.tutorial.folder.2 - base views.views.jdbc.client_type.CATALOGNAME}' 
+    RELATIONNAME='client_type' 
+    OUTPUTSCHEMA (
+        code = 'code' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2', description='', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE,
+        value = 'value' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE client_type I18N gb (
+        code:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '2', description = ''), 
+        value:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100', description = '')
+    )
+    FOLDER = '/2 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD client_type(
+        I18N gb
+        CONSTRAINTS (
+             ADD code (any) OPT ANY
+             ADD value (any) OPT ANY
+        )
+        OUTPUTLIST (code, value
+        )
+        WRAPPER (jdbc client_type)
+    );
+

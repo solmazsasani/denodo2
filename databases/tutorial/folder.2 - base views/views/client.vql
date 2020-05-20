@@ -1,0 +1,39 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC client
+    FOLDER = '/2 - base views'
+    DATASOURCENAME=acme_crm_ds
+    CATALOGNAME='${databases.tutorial.folder.2 - base views.views.jdbc.client.CATALOGNAME}' 
+    RELATIONNAME='client' 
+    OUTPUTSCHEMA (
+        client_id = 'client_id' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', description='', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE,
+        name = 'name' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE,
+        surname = 'surname' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE,
+        client_type = 'client_type' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2', description='', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE
+    )
+    CONSTRAINT 'PRIMARY' PRIMARY KEY ( 'client_id' )
+    INDEX 'PRIMARY' CLUSTER UNIQUE PRIMARY ( 'client_id' );
+
+CREATE OR REPLACE TABLE client I18N gb (
+        client_id:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '50', description = ''), 
+        name:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100', description = ''), 
+        surname:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100', description = ''), 
+        client_type:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '2', description = '')
+    )
+    FOLDER = '/2 - base views'
+    CONSTRAINT 'PRIMARY' PRIMARY KEY ( 'client_id' )
+    CACHE PARTIAL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD client(
+        I18N gb
+        CONSTRAINTS (
+             ADD client_id (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD surname (any) OPT ANY
+             ADD client_type (any) OPT ANY
+        )
+        OUTPUTLIST (client_id, client_type, name, surname
+        )
+        WRAPPER (jdbc client)
+    );
+

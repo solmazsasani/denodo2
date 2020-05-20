@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW client_type_j_client FOLDER = '/3 - derived view' AS SELECT client.client_id AS client_id, client.name AS name, client.surname AS surname, client.client_type AS client_type, client_type.code AS code, client_type.value AS value FROM client_type AS client_type INNER JOIN client AS client ON client_type.code = client.client_type ;
+
+ALTER VIEW client_type_j_client
+ LAYOUT (client_type = [270, 40, 200, 66], client = [20, 20, 200, 106]);
+

@@ -1,0 +1,6 @@
+﻿/databases/tutorial/folder.3 - derived view/3 - derived view.vql
+/databases/tutorial/folder.2 - base views/2 - base views.vql
+/databases/tutorial/folder.1 - first steps/1 - first steps.vql
+/databases/tutorial/folder.1 - first steps/datasources/jdbc/acme_crm_ds.vql
+/databases/tutorial/folder.2 - base views/views/client_type.vql
+/databases/tutorial/folder.2 - base views/views/client.vql

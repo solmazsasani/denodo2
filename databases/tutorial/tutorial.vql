@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE DATABASE tutorial '';
+
+ALTER DATABASE tutorial
+  CHARSET DEFAULT;
+
