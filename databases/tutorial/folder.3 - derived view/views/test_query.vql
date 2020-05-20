@@ -1,6 +1,0 @@
-﻿CREATE OR REPLACE MATERIALIZED TABLE test_query (
-        id:int, 
-        query_:text
-    )
-    FOLDER = '/3 - derived view';
-
